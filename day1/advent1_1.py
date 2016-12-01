@@ -48,7 +48,7 @@ def change_direction(current_direction, direction_to_turn):
 def distance(path):
     current_position = Position(0, 0)
     direction = Direction.north
-    pathway = path.replace(" ", "").split(",")
+    pathway = path.split(", ")
 
     for step in pathway:
         direction_to_turn, distance = step[0], int(step[1:])

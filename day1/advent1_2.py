@@ -11,6 +11,14 @@ class Direction(Enum):
     west = 3
 
 
+MOVEMENTS = {
+    Direction.north: [0,  1],
+    Direction.east: [1, 0],
+    Direction.south: [0, -1],
+    Direction.west: [-1, 0]
+}
+
+
 class Position:
     def __init__(self, x, y):
         self.x = x
@@ -18,46 +26,28 @@ class Position:
         self.path = [(x, y)]
         self.current_direction = Direction.north
 
+    NEW_DIR = {
+        'L': lambda x: (x + 1) % 4,
+        'R' : lambda x: (x - 1) % 4
+    }
+
     def move(self, distance):
         for i in range(0, distance):
-            self.__adjust_coords()
+            self.x += MOVEMENTS[self.current_direction][0]
+            self.y += MOVEMENTS[self.current_direction][1]
             self.path.append(self.coordinates())
 
     def coordinates(self):
         return (self.x, self.y)
 
     def turn(self, direction_to_turn):
-        if direction_to_turn == "L":
-            self.__turn_left()
-        else:
-            self.__turn_right()
-
-    def __turn_left(self):
-        if self.current_direction == Direction.north:
-             self.current_direction = Direction(3)
-        else:
-            self.current_direction = Direction(self.current_direction.value-1)
-
-    def __turn_right(self):
-        if self.current_direction == Direction.west:
-            self.current_direction = Direction(0)
-        else:
-            self.current_direction = Direction(self.current_direction.value+1)
-
-    def __adjust_coords(self):
-        if self.current_direction == Direction.north:
-                self.y += 1
-        elif self.current_direction == Direction.south:
-                self.y -= 1
-        elif self.current_direction == Direction.east:
-                self.x += 1
-        elif self.current_direction == Direction.west:
-                self.x -= 1
+        new_direction = self.NEW_DIR[direction_to_turn](self.current_direction.value)
+        self.current_direction = Direction(new_direction)
 
 
 def distance(path):
     current_position = Position(0, 0)
-    pathway = path.replace(" ", "").split(",")
+    pathway = path.split(", ")
 
     for step in pathway:
         direction_to_turn, distance = step[0], int(step[1:])
