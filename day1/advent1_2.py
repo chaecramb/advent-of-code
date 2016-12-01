@@ -27,17 +27,22 @@ class Position:
         return (self.x, self.y)
 
     def turn(self, direction_to_turn):
-        # TODO: Refactor this ugliness!
         if direction_to_turn == "L":
-            if self.current_direction == Direction.north:
-                 self.current_direction = Direction(3)
-            else:
-                self.current_direction = Direction(self.current_direction.value-1)
+            self.__turn_left()
         else:
-            if self.current_direction == Direction.west:
-                self.current_direction = Direction(0)
-            else:
-                self.current_direction = Direction(self.current_direction.value+1)
+            self.__turn_right()
+
+    def __turn_left(self):
+        if self.current_direction == Direction.north:
+             self.current_direction = Direction(3)
+        else:
+            self.current_direction = Direction(self.current_direction.value-1)
+
+    def __turn_right(self):
+        if self.current_direction == Direction.west:
+            self.current_direction = Direction(0)
+        else:
+            self.current_direction = Direction(self.current_direction.value+1)
 
     def __adjust_coords(self):
         if self.current_direction == Direction.north:
