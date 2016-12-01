@@ -32,7 +32,7 @@ class Position:
     }
 
     def move(self, distance):
-        for i in range(0, distance):
+        for _ in range(distance):
             self.x += MOVEMENTS[self.current_direction][0]
             self.y += MOVEMENTS[self.current_direction][1]
             self.path.append(self.coordinates())
