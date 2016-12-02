@@ -18,29 +18,37 @@ MOVEMENTS = {
 
 
 class Position:
+    """ 
+    Position class holds details of current position on grid, orientation 
+    and the path taken to reach the current position.
+    """
     def __init__(self, x, y):
         self.x = x
         self.y = y
         self.path = [(x, y)]
-        self.current_direction = Direction.north
+        self.orientation = Direction.north
 
+    # adjusts orientation approriately 
     NEW_DIR = {
         'L': lambda x: (x + 1) % 4,
         'R' : lambda x: (x - 1) % 4
     }
 
     def move(self, distance):
+        # adjust x and y coords appropriately and track movements in self.path
         for _ in range(distance):
-            self.x += MOVEMENTS[self.current_direction][0]
-            self.y += MOVEMENTS[self.current_direction][1]
+            self.x += MOVEMENTS[self.orientation][0]
+            self.y += MOVEMENTS[self.orientation][1]
             self.path.append(self.coordinates())
 
     def coordinates(self):
+        # the current position of the instance
         return (self.x, self.y)
 
     def turn(self, direction_to_turn):
-        new_direction = self.NEW_DIR[direction_to_turn](self.current_direction.value)
-        self.current_direction = Direction(new_direction)
+        # change orientation of the instance
+        new_direction = self.NEW_DIR[direction_to_turn](self.orientation.value)
+        self.orientation = Direction(new_direction)
 
 
 def distance(path):
