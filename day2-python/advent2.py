@@ -1,3 +1,4 @@
+# Layout of keypad
 KEYPAD = [
 [1,2,3],
 [4,5,6],
@@ -21,14 +22,18 @@ def move(position, direction):
         'L': (0, -1)
     }
 
+    # Constraints of keypad
+    MIN = 0
+    MAX = 2
+
     # Constrain return tuple by 0 and 2 to stay within bounds
     # of the keypad
-    return (max(0, min(position[0]+MOVEMENT[direction][0], 2)),
-            max(0, min(position[1]+MOVEMENT[direction][1], 2)))
+    return (max(MIN, min(position[0]+MOVEMENT[direction][0], MAX)),
+            max(MIN, min(position[1]+MOVEMENT[direction][1], MAX)))
 
 
 def code(instructions):
-    # Starting position
+    # Start at number 5 on the keypad
     position = (1,1)
 
     # Digits in the code
