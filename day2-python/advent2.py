@@ -5,6 +5,18 @@ KEYPAD = [
 [7,8,9]
 ]
 
+# Possible movements
+MOVEMENT = {
+    'U': (-1, 0),
+    'R': (0, 1),
+    'D': (1, 0),
+    'L': (0, -1)
+}
+
+# Constraints of keypad
+MIN = 0
+MAX = 2
+
 
 def keypad_digit(position):
     """ Return the digit of the keypad corresponding to a position """
@@ -14,20 +26,7 @@ def keypad_digit(position):
 def move(position, direction):
     """ Return a new position having moved in given direction """
 
-    # Possible movements
-    MOVEMENT = {
-        'U': (-1, 0),
-        'R': (0, 1),
-        'D': (1, 0),
-        'L': (0, -1)
-    }
-
-    # Constraints of keypad
-    MIN = 0
-    MAX = 2
-
-    # Constrain return tuple by 0 and 2 to stay within bounds
-    # of the keypad
+    # Return position as a tuple contrained by bounds of keypad
     return (max(MIN, min(position[0]+MOVEMENT[direction][0], MAX)),
             max(MIN, min(position[1]+MOVEMENT[direction][1], MAX)))
 
@@ -39,7 +38,7 @@ def code(instructions):
     # Digits in the code
     digits = []
 
-    # Split input but line
+    # Split input by line
     # Each line corresponds the to instructions for an
     # individual digit
     digit_instructions = instructions.split('\n')
