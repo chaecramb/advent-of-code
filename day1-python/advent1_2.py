@@ -30,8 +30,8 @@ class Position:
 
     # adjusts orientation approriately 
     NEW_DIR = {
-        'L': lambda x: (x + 1) % 4,
-        'R' : lambda x: (x - 1) % 4
+        'L': lambda x: (x - 1) % 4,
+        'R' : lambda x: (x + 1) % 4
     }
 
     def move(self, distance):
