@@ -42,15 +42,15 @@ int main()
 
     int num_cols = 3;
 
-    // Iterate through the sides filestream, checking 3 rows at a time
-    // in order to capture all sides the triangles
+    // Iterate through the sides filestream.
+    // Check 3 rows at a time in order to capture all sides of each triangle
+    // 3 rows equates to 3 * num_cols sides
     int side_count = 0; // sides processed in the current 3 rows
     while (fs >> side)
     {
-        // Add side to correct triangle based upon the number of cols
         triangles.at(side_count % num_cols).push_back(side);
 
-        // Check if we've completed a 3 rows
+        // Check if we've completed 3 rows
         if (side_count == num_cols * 3 - 1)
         {
             // Loop through triangles by references
@@ -63,7 +63,7 @@ int main()
             // Reset i before moving on to the next row
             side_count = -1;
         }
-        // Increment the number of sides process for the current 3 row group
+        // Increment the number of sides processed for the current 3 row group
         ++side_count;
     }
     cout << "Possible triangles: " << possible_triangles << endl;
