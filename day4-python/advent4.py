@@ -2,9 +2,9 @@ from collections import Counter
 
 def parse(encrypted_data):
     name = encrypted_data[:-11]
-    room_id = int(encrypted_data[-10:-7])
+    sector_id = int(encrypted_data[-10:-7])
     checksum = encrypted_data[-6:-1]
-    return (name, room_id, checksum)
+    return (name, sector_id, checksum)
 
 
 def count_letters(name):
@@ -35,12 +35,24 @@ def main(file):
 
     with open(file, 'r') as f:
         for encrypted_line in f.readlines():
-            name, room_id, checksum = parse(encrypted_line.strip())
+            name, sector_id, checksum = parse(encrypted_line.strip())
             if real_room(name, checksum):
-                sum_of_sectors += room_id
+                sum_of_sectors += sector_id
+
+                #Part 2
+                if decrypt_name(name, sector_id) == 'northpole object storage':
+                    print("North Pole objects stored at: " + str(sector_id))
 
     return sum_of_sectors
     print("The sum of the sector IDs of the valid rooms is: " + str(sum_of_sectors))
+
+
+def inc_alpha_char(char, increment):
+    return chr((ord(char)+increment%26)%97%26 + 97) if char.isalpha() else ' '
+
+
+def decrypt_name(name, sector_id):
+    return ''.join([inc_alpha_char(c, sector_id) for c in name])
 
 
 if __name__ == '__main__':

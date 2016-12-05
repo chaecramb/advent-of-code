@@ -20,3 +20,6 @@ def test_fake_room2():
 
 def test_advent4():
     assert a4.main('test_input.txt') == 1514
+
+def decrypt_name():
+    assert a4.part2('qzmt-zixmtkozy-ivhz', 343) == 'very encrypted name'
