@@ -30,6 +30,14 @@ def real_room(name, checksum):
     return checksum_valid
 
 
+def inc_alpha_char(char, increment):
+    return chr((ord(char)+increment%26)%97%26 + 97) if char.isalpha() else ' '
+
+
+def decrypt_name(name, sector_id):
+    return ''.join([inc_alpha_char(c, sector_id) for c in name])
+
+
 def main(file):
     sum_of_sectors = 0
 
@@ -45,14 +53,6 @@ def main(file):
 
     return sum_of_sectors
     print("The sum of the sector IDs of the valid rooms is: " + str(sum_of_sectors))
-
-
-def inc_alpha_char(char, increment):
-    return chr((ord(char)+increment%26)%97%26 + 97) if char.isalpha() else ' '
-
-
-def decrypt_name(name, sector_id):
-    return ''.join([inc_alpha_char(c, sector_id) for c in name])
 
 
 if __name__ == '__main__':
