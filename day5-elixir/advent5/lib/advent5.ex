@@ -1,29 +1,31 @@
 defmodule Advent5 do
   def generate_password(door_id) do
-    generate_password(door_id, 0, "")
+    generate_password(door_id, 0, "", 8)
   end
 
-  defp generate_password(door_id, index, password) do
-    if String.length(password) == 8 do
-      password
-    else
-      IO.puts(password)
-      IO.puts(index)
-      hash = md5_hash(door_id <> Integer.to_string(index))
+  defp generate_password(_, _, password, 0), do: String.downcase(password)
+  defp generate_password(door_id, index, password, remaining) do
+    hash = md5_hash(door_id <> Integer.to_string(index))
 
-      relevant_section = String.slice(hash, 0..5)
-
-      if String.slice(relevant_section, 0..4) == "00000" do
-        next_char = String.last(relevant_section)
-        generate_password(door_id, index + 1, password <> next_char)
-      else 
-        generate_password(door_id, index + 1, password)
-      end
+    case next_char(hash) do
+      "" -> 
+        generate_password(door_id, index + 1, password, remaining)
+      char -> 
+        generate_password(door_id, index + 1, password <> char, remaining - 1)
     end
+  end
+
+  defp next_char(hash) do
+    if Regex.match?(~r/^00000/, hash), do: String.at(hash, 5), else: ""
   end
 
   defp md5_hash(input) do
     :crypto.hash(:md5, input)
     |> Base.encode16
   end
+
+  def main([door_id]) do
+    IO.puts generate_password(door_id)
+  end
 end
+
