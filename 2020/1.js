@@ -9,12 +9,12 @@ const readFileLines = (filename) =>
 
 const expenses = readFileLines("inputs/1.txt");
 
-const findAddends = (expenses, sum) => {
+const findAddends = (array, sum) => {
   let addends;
-  expenses.forEach((e1) => {
-    expenses.forEach((e2) => {
-      if (e1 + e2 === sum) {
-        addends = [e1, e2];
+  array.forEach((n1) => {
+    array.forEach((n2) => {
+      if (n1 + n2 === sum) {
+        addends = [n1, n2];
       }
     });
   });
